@@ -1,391 +1,278 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Be My Valentine ❤️</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For My Guduu 💖</title>
 
 <style>
-*{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
-  font-family:'Segoe UI',sans-serif;
+body {
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  overflow: hidden;
 }
 
-body{
-  height:100vh;
-  overflow:hidden;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  background:linear-gradient(135deg,#ff4d6d,#ff8fab,#ffc2d1);
-  color:white;
-  position:relative;
+.card {
+  background: white;
+  padding: 30px;
+  border-radius: 20px;
+  text-align: center;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+  width: 90%;
+  max-width: 350px;
 }
 
-/* Floating hearts */
-.heart{
-  position:absolute;
-  bottom:-20px;
-  font-size:20px;
-  animation:floatUp linear infinite;
-  opacity:0.8;
+button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 10px;
+  background: #ff1e56;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  margin: 10px;
+  transition: 0.3s;
 }
 
-@keyframes floatUp{
-  from{transform:translateY(0);opacity:1;}
-  to{transform:translateY(-110vh);opacity:0;}
+button:hover {
+  transform: scale(1.1);
 }
 
-/* Card */
-.card{
-  width:92%;
-  max-width:360px;
-  padding:30px 20px;
-  text-align:center;
-  border-radius:25px;
-  background:rgba(255,255,255,0.15);
-  backdrop-filter:blur(15px);
-  box-shadow:0 10px 30px rgba(0,0,0,0.3);
-  animation:fadeIn 1s ease;
+.hidden {
+  display: none;
 }
 
-@keyframes fadeIn{
-  from{opacity:0;transform:scale(0.8);}
-  to{opacity:1;transform:scale(1);}
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-h1{
-  font-size:20px;
-  margin-bottom:25px;
-  line-height:1.4;
+.popup {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-button{
-  padding:12px 25px;
-  border:none;
-  border-radius:30px;
-  font-size:16px;
-  margin:10px;
-  cursor:pointer;
-  transition:0.3s;
+.popupContent {
+  background: white;
+  padding: 25px;
+  border-radius: 20px;
+  width: 90%;
+  max-width: 350px;
+  text-align: center;
+  animation: pop 0.4s ease;
 }
 
-#yesBtn{
-  background:#ff1e56;
-  color:white;
-  box-shadow:0 0 15px rgba(255,30,86,0.6);
+@keyframes pop {
+  from { transform: scale(0.5); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
 }
 
-#yesBtn:active{transform:scale(1.1);}
-
-#noBtn{
-  background:white;
-  color:#ff1e56;
+input {
+  padding: 10px;
+  width: 80%;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  margin-top: 10px;
 }
 
-/* Popup */
-.popup{
-  position:fixed;
-  inset:0;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  text-align:center;
-  padding:30px;
-  font-size:22px;
-  background:linear-gradient(135deg,#ff4d6d,#ff8fab);
-  animation:fadePopup 0.6s ease forwards;
-  z-index:100;
-  flex-direction:column;
+.quizOption {
+  width: 100%;
+  background: white;
+  color: #ff1e56;
+  margin: 8px 0;
+  font-weight: bold;
+  border: 2px solid #ff1e56;
 }
 
-@keyframes fadePopup{
-  from{opacity:0;}
-  to{opacity:1;}
+.quizOption:hover {
+  background: #ff1e56;
+  color: white;
 }
 
-.hidden{display:none;}
-
-.popupContent{
-  max-width:350px;
-  animation:popUp 0.6s ease;
+.quizOption:disabled {
+  opacity: 0.6;
 }
 
-@keyframes popUp{
-  from{transform:scale(0.6);opacity:0;}
-  to{transform:scale(1);opacity:1;}
-}
-
-/* Confetti */
-#confetti-canvas{
-  position:fixed;
-  pointer-events:none;
-  top:0;
-  left:0;
-  width:100vw;
-  height:100vh;
-  z-index:110;
-}
-
-/* Name Overlay */
-#nameOverlay{
-  position:fixed;
-  inset:0;
-  background:linear-gradient(135deg,#ff4d6dcc,#ff8fabcc);
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  z-index:200;
-  flex-direction:column;
-  padding:20px;
-  text-align:center;
-  color:white;
-}
-
-#nameOverlay input{
-  padding:12px 18px;
-  border-radius:30px;
-  border:none;
-  width:80%;
-  max-width:300px;
-  font-size:18px;
-  margin-bottom:15px;
-  text-align:center;
-  outline:none;
-}
-
-/* Quiz */
-.quizBox{
-  background:rgba(255,255,255,0.2);
-  padding:25px;
-  border-radius:20px;
-  animation:bounceIn 0.6s ease;
-}
-
-.quizOptions{
-  display:flex;
-  flex-direction:column;
-  gap:10px;
-}
-
-.quizBtn{
-  background:white;
-  color:#ff1e56;
-  border-radius:25px;
-  padding:10px;
-  font-size:16px;
-  transition:0.3s;
-}
-
-.quizBtn:hover{
-  transform:scale(1.05);
-  background:#ff1e56;
-  color:white;
-}
-
-@keyframes bounceIn{
-  0%{transform:scale(0.5);opacity:0;}
-  60%{transform:scale(1.1);}
-  100%{transform:scale(1);opacity:1;}
+canvas {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
 }
 </style>
 </head>
 
 <body>
 
-<div id="nameOverlay">
-  <h2>What's your name, my Guduu? 🥰</h2>
-  <input type="text" id="nameInput" placeholder="Type your name here" />
-  <button id="nameSubmit">Let's Go!</button>
+<canvas id="confetti"></canvas>
+
+<!-- Name Overlay -->
+<div id="nameOverlay" class="overlay">
+  <div class="card">
+    <h2>Enter your name Guduu 🥺💖</h2>
+    <input type="text" id="nameInput">
+    <br>
+    <button id="nameSubmit">Continue 💘</button>
+  </div>
 </div>
 
-<!-- Quiz -->
-<div id="motappaQuiz" class="popup hidden">
-  <div class="popupContent quizBox">
+<!-- Quiz Popup -->
+<div id="quizPopup" class="popup hidden">
+  <div class="popupContent">
     <h2>1. What is motappa's favorite thing? 🥺</h2>
-    <div class="quizOptions">
-      <button class="quizBtn">a. Food 🍕</button>
-      <button class="quizBtn">b. Scooty ride 🛵</button>
-      <button class="quizBtn">c. Chilling 😎</button>
-      <button class="quizBtn">d. Quality time 💑</button>
-    </div>
-    <button id="revealAnswerBtn" class="hidden">
-      Click here lanja to find out the correct answer 😌💘
+
+    <button class="quizOption">a. Food 🍕</button>
+    <button class="quizOption">b. Scooty ride 🛵</button>
+    <button class="quizOption">c. Chilling 😎</button>
+    <button class="quizOption">d. Quality time 💑</button>
+
+    <button id="revealAnswer" class="hidden">
+      Click here lanja to find out correct answer 😌💘
     </button>
   </div>
 </div>
 
-<div class="card hidden" id="mainCard">
-  <h1>Will you be my Valentine tomorrow, <span id="displayName">Guduu</span>? ❤️</h1>
-  <button id="yesBtn">Yes 💖</button>
-  <button id="noBtn">No 😜</button>
+<!-- Main Card -->
+<div id="mainCard" class="card hidden">
+  <h2>Will you be my Valentine, <span id="displayName"></span>? 💖</h2>
+  <button id="yesBtn">Yes 😍</button>
+  <button id="noBtn">No 🙈</button>
 </div>
 
+<!-- Wrong Answer Popup -->
 <div id="popup" class="popup hidden">
-  <div class="popupContent" id="popupText"></div>
-  <small style="margin-top:15px;font-size:14px;cursor:pointer;opacity:0.8;">
-    Tap anywhere to close
-  </small>
+  <div class="popupContent">
+    <h3 id="popupText"></h3>
+  </div>
 </div>
-
-<canvas id="confetti-canvas"></canvas>
 
 <script>
-// Floating Hearts
-function createHeart(){
-  const heart=document.createElement("div");
-  heart.className="heart";
-  heart.innerHTML="💖";
-  heart.style.left=Math.random()*100+"vw";
-  heart.style.animationDuration=(4+Math.random()*3)+"s";
-  heart.style.fontSize=(16+Math.random()*25)+"px";
-  document.body.appendChild(heart);
-  setTimeout(()=>heart.remove(),7000);
-}
-setInterval(createHeart,400);
+const nameOverlay = document.getElementById("nameOverlay");
+const nameInput = document.getElementById("nameInput");
+const nameSubmit = document.getElementById("nameSubmit");
+const displayName = document.getElementById("displayName");
+const mainCard = document.getElementById("mainCard");
+const quizPopup = document.getElementById("quizPopup");
+const quizOptions = document.querySelectorAll(".quizOption");
+const revealAnswer = document.getElementById("revealAnswer");
+const popup = document.getElementById("popup");
+const popupText = document.getElementById("popupText");
+const yesBtn = document.getElementById("yesBtn");
+const noBtn = document.getElementById("noBtn");
 
-const nameOverlay=document.getElementById("nameOverlay");
-const nameInput=document.getElementById("nameInput");
-const nameSubmit=document.getElementById("nameSubmit");
-const motappaQuiz=document.getElementById("motappaQuiz");
-const mainCard=document.getElementById("mainCard");
-const displayName=document.getElementById("displayName");
-const popup=document.getElementById("popup");
-const popupText=document.getElementById("popupText");
-const quizBtns=document.querySelectorAll(".quizBtn");
-const revealAnswerBtn=document.getElementById("revealAnswerBtn");
-const yesBtn=document.getElementById("yesBtn");
-const noBtn=document.getElementById("noBtn");
+let userName = "";
+let selectedCount = 0;
 
-let selectedOptions=0;
-let noCount=0;
-let userName="Guduu";
-
-nameSubmit.addEventListener("click",()=>{
-  const val=nameInput.value.trim();
-  if(val){
-    userName=val;
-    displayName.textContent=userName;
-    nameOverlay.style.display="none";
-    setTimeout(()=>motappaQuiz.classList.remove("hidden"),500);
+/* Name Submit */
+nameSubmit.addEventListener("click", () => {
+  const val = nameInput.value.trim();
+  if(val.length > 0) {
+    userName = val;
+    displayName.textContent = userName;
+    nameOverlay.style.display = "none";
+    quizPopup.classList.remove("hidden");
+  } else {
+    alert("Please enter your name Guduu 🥺");
   }
 });
 
-quizBtns.forEach(btn=>{
-  btn.addEventListener("click",()=>{
-    if(btn.disabled)return;
-    btn.disabled=true;
-    selectedOptions++;
+/* Quiz Logic */
+quizOptions.forEach(option => {
+  option.addEventListener("click", () => {
+    if(option.disabled) return;
+    option.disabled = true;
+    selectedCount++;
+
     showPopup("What guduu, you don't know ur motappa 😭💔");
-    if(selectedOptions===4){
-      revealAnswerBtn.classList.remove("hidden");
+
+    if(selectedCount === 4){
+      revealAnswer.classList.remove("hidden");
     }
   });
 });
 
-revealAnswerBtn.addEventListener("click",()=>{
-  popupText.innerHTML=`
-  💖💖💖<br><br>
-  a. Food with you 🍕❤️<br>
-  b. Scooty ride with you 🛵💘<br>
-  c. Chilling with you 😎💕<br>
-  d. Quality time with you 💑💞<br><br>
-  Because everything is special with YOU 😌💓
+/* Reveal */
+revealAnswer.addEventListener("click", () => {
+  popupText.innerHTML = `
+    💖 Food with you 🍕<br>
+    💖 Ride with you 🛵<br>
+    💖 Chill with you 😎<br>
+    💖 Quality time with you 💑<br><br>
+    Everything is special with YOU 😌💘
   `;
   popup.classList.remove("hidden");
-  createConfetti(200);
-  animateConfetti();
-  setTimeout(()=>{
-    motappaQuiz.classList.add("hidden");
+  createConfetti();
+  setTimeout(() => {
+    popup.classList.add("hidden");
+    quizPopup.classList.add("hidden");
     mainCard.classList.remove("hidden");
-  },4000);
+  }, 4000);
 });
 
-function showPopup(message){
-  popupText.innerHTML=message;
-  popup.classList.remove("hidden");
-}
-
-popup.addEventListener("click",()=>{
-  popup.classList.add("hidden");
-  confettiElements=[];
-  ctx.clearRect(0,0,confettiCanvas.width,confettiCanvas.height);
-});
-
-/* Confetti */
-const confettiCanvas=document.getElementById("confetti-canvas");
-const ctx=confettiCanvas.getContext("2d");
-let confettiElements=[];
-confettiCanvas.width=window.innerWidth;
-confettiCanvas.height=window.innerHeight;
-
-class ConfettiParticle{
-  constructor(){
-    this.x=Math.random()*confettiCanvas.width;
-    this.y=Math.random()*confettiCanvas.height-confettiCanvas.height;
-    this.size=7+Math.random()*5;
-    this.speedY=2+Math.random()*3;
-    this.speedX=Math.random()*2-1;
-    this.angle=Math.random()*360;
-    this.angularSpeed=(Math.random()-0.5)*0.1;
-    this.color=`hsl(${Math.random()*360},90%,60%)`;
-  }
-  update(){
-    this.y+=this.speedY;
-    this.x+=this.speedX;
-    this.angle+=this.angularSpeed;
-    if(this.y>confettiCanvas.height){
-      this.y=-this.size;
-      this.x=Math.random()*confettiCanvas.width;
-    }
-  }
-  draw(){
-    ctx.save();
-    ctx.translate(this.x,this.y);
-    ctx.rotate(this.angle);
-    ctx.fillStyle=this.color;
-    ctx.fillRect(-this.size/2,-this.size/2,this.size,this.size/2);
-    ctx.restore();
-  }
-}
-
-function createConfetti(count){
-  confettiElements=[];
-  for(let i=0;i<count;i++){
-    confettiElements.push(new ConfettiParticle());
-  }
-}
-
-function animateConfetti(){
-  ctx.clearRect(0,0,confettiCanvas.width,confettiCanvas.height);
-  confettiElements.forEach(p=>{
-    p.update();
-    p.draw();
-  });
-  requestAnimationFrame(animateConfetti);
-}
-
-yesBtn.addEventListener("click",()=>{
-  showPopup("YAYYY 💖 I knew it!!! You're stuck with me forever 😌💘
+/* Yes Button */
+yesBtn.addEventListener("click", () => {
+  popupText.innerHTML = "Yayyy 🥰💖 I love you sooo much!
 🌹 Roses are red,<br> Guduu's the cutest, it's true!<br><br> 💖 When you say yes, my heart takes flight,<br> Together forever, our love shines bright!<br><br> Promise to annoy you lovingly,<br> And make you laugh every single day! 😄
-");
-  createConfetti(150);
-  animateConfetti();
+";
+  popup.classList.remove("hidden");
+  createConfetti();
 });
 
-noBtn.addEventListener("click",()=>{
-  noCount++;
-  if(noCount===1){
-    showPopup("Ohhh really? 🥺 Think again...");
-  }else if(noCount===2){
-    showPopup("Wrong choice detected 🚨😂");
-  }else{
-    showPopup("Okay fine... But my heart will wait for you anyway 💔❤️");
-    noBtn.disabled=true;
-  }
+/* No Button Runs Away */
+noBtn.addEventListener("mouseover", () => {
+  noBtn.style.position = "absolute";
+  noBtn.style.top = Math.random()*80 + "%";
+  noBtn.style.left = Math.random()*80 + "%";
 });
+
+/* Popup helper */
+function showPopup(message){
+  popupText.innerHTML = message;
+  popup.classList.remove("hidden");
+  setTimeout(() => popup.classList.add("hidden"), 2000);
+}
+
+/* Simple Confetti */
+function createConfetti(){
+  const canvas = document.getElementById("confetti");
+  const ctx = canvas.getContext("2d");
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+
+  let pieces = [];
+  for(let i=0;i<150;i++){
+    pieces.push({
+      x: Math.random()*canvas.width,
+      y: Math.random()*canvas.height,
+      size: Math.random()*8+2,
+      speed: Math.random()*3+2
+    });
+  }
+
+  function draw(){
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    pieces.forEach(p=>{
+      ctx.fillStyle = "hsl("+Math.random()*360+",100%,50%)";
+      ctx.fillRect(p.x,p.y,p.size,p.size);
+      p.y += p.speed;
+      if(p.y>canvas.height) p.y=0;
+    });
+    requestAnimationFrame(draw);
+  }
+  draw();
+}
 </script>
 
 </body>
