@@ -1,277 +1,121 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>For My Guduu 💖</title>
 
 <style>
 body {
   margin: 0;
-  font-family: 'Segoe UI', sans-serif;
-  background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+  font-family: Arial, sans-serif;
+  background: linear-gradient(135deg,#ff9a9e,#fad0c4);
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
-  overflow: hidden;
 }
 
-.card {
+.container {
   background: white;
-  padding: 30px;
+  width: 90%;
+  max-width: 350px;
+  padding: 25px;
   border-radius: 20px;
   text-align: center;
   box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-  width: 90%;
-  max-width: 350px;
 }
 
 button {
-  padding: 10px 20px;
-  border: none;
+  width: 100%;
+  padding: 12px;
+  margin: 8px 0;
   border-radius: 10px;
-  background: #ff1e56;
-  color: white;
-  font-size: 16px;
+  border: 2px solid #ff1e56;
+  background: white;
+  color: #ff1e56;
+  font-weight: bold;
+  font-size: 15px;
   cursor: pointer;
-  margin: 10px;
   transition: 0.3s;
 }
 
 button:hover {
-  transform: scale(1.1);
-}
-
-.hidden {
-  display: none;
-}
-
-.overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.6);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.popup {
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.7);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.popupContent {
-  background: white;
-  padding: 25px;
-  border-radius: 20px;
-  width: 90%;
-  max-width: 350px;
-  text-align: center;
-  animation: pop 0.4s ease;
-}
-
-@keyframes pop {
-  from { transform: scale(0.5); opacity: 0; }
-  to { transform: scale(1); opacity: 1; }
+  background: #ff1e56;
+  color: white;
 }
 
 input {
+  width: 90%;
   padding: 10px;
-  width: 80%;
   border-radius: 8px;
   border: 1px solid #ccc;
   margin-top: 10px;
 }
 
-.quizOption {
-  width: 100%;
-  background: white;
-  color: #ff1e56;
-  margin: 8px 0;
-  font-weight: bold;
-  border: 2px solid #ff1e56;
-}
-
-.quizOption:hover {
-  background: #ff1e56;
-  color: white;
-}
-
-.quizOption:disabled {
-  opacity: 0.6;
-}
-
-canvas {
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
+.hidden {
+  display: none;
 }
 </style>
 </head>
 
 <body>
 
-<canvas id="confetti"></canvas>
-
-<!-- Name Overlay -->
-<div id="nameOverlay" class="overlay">
-  <div class="card">
-    <h2>Enter your name Guduu 🥺💖</h2>
-    <input type="text" id="nameInput">
-    <br>
-    <button id="nameSubmit">Continue 💘</button>
-  </div>
+<div class="container" id="nameScreen">
+  <h2>Enter your name Guduu 🥺💖</h2>
+  <input type="text" id="nameInput">
+  <button onclick="goToQuiz()">Continue 💘</button>
 </div>
 
-<!-- Quiz Popup -->
-<div id="quizPopup" class="popup hidden">
-  <div class="popupContent">
-    <h2>1. What is motappa's favorite thing? 🥺</h2>
+<div class="container hidden" id="quizScreen">
+  <h2>1. What is motappa's favorite thing? 🥺</h2>
 
-    <button class="quizOption">a. Food 🍕</button>
-    <button class="quizOption">b. Scooty ride 🛵</button>
-    <button class="quizOption">c. Chilling 😎</button>
-    <button class="quizOption">d. Quality time 💑</button>
-
-    <button id="revealAnswer" class="hidden">
-      Click here lanja to find out correct answer 😌💘
-    </button>
-  </div>
+  <button onclick="wrongAnswer()">Food 🍕</button>
+  <button onclick="wrongAnswer()">Scooty ride 🛵</button>
+  <button onclick="wrongAnswer()">Chilling 😎</button>
+  <button onclick="showFinal()">Quality time 💑</button>
 </div>
 
-<!-- Main Card -->
-<div id="mainCard" class="card hidden">
-  <h2>Will you be my Valentine, <span id="displayName"></span>? 💖</h2>
-  <button id="yesBtn">Yes 😍</button>
-  <button id="noBtn">No 🙈</button>
-</div>
+<div class="container hidden" id="finalScreen">
+  <h2 id="finalText"></h2>
 
-<!-- Wrong Answer Popup -->
-<div id="popup" class="popup hidden">
-  <div class="popupContent">
-    <h3 id="popupText"></h3>
-  </div>
+  <button onclick="sayYes()">Yes 😍</button>
+  <button id="noBtn" onmouseover="moveNo()">No 🙈</button>
 </div>
 
 <script>
-const nameOverlay = document.getElementById("nameOverlay");
-const nameInput = document.getElementById("nameInput");
-const nameSubmit = document.getElementById("nameSubmit");
-const displayName = document.getElementById("displayName");
-const mainCard = document.getElementById("mainCard");
-const quizPopup = document.getElementById("quizPopup");
-const quizOptions = document.querySelectorAll(".quizOption");
-const revealAnswer = document.getElementById("revealAnswer");
-const popup = document.getElementById("popup");
-const popupText = document.getElementById("popupText");
-const yesBtn = document.getElementById("yesBtn");
-const noBtn = document.getElementById("noBtn");
-
 let userName = "";
-let selectedCount = 0;
 
-/* Name Submit */
-nameSubmit.addEventListener("click", () => {
-  const val = nameInput.value.trim();
-  if(val.length > 0) {
-    userName = val;
-    displayName.textContent = userName;
-    nameOverlay.style.display = "none";
-    quizPopup.classList.remove("hidden");
-  } else {
-    alert("Please enter your name Guduu 🥺");
+function goToQuiz() {
+  const name = document.getElementById("nameInput").value.trim();
+  if(name === "") {
+    alert("Enter your name first 🥺");
+    return;
   }
-});
-
-/* Quiz Logic */
-quizOptions.forEach(option => {
-  option.addEventListener("click", () => {
-    if(option.disabled) return;
-    option.disabled = true;
-    selectedCount++;
-
-    showPopup("What guduu, you don't know ur motappa 😭💔");
-
-    if(selectedCount === 4){
-      revealAnswer.classList.remove("hidden");
-    }
-  });
-});
-
-/* Reveal */
-revealAnswer.addEventListener("click", () => {
-  popupText.innerHTML = `
-    💖 Food with you 🍕<br>
-    💖 Ride with you 🛵<br>
-    💖 Chill with you 😎<br>
-    💖 Quality time with you 💑<br><br>
-    Everything is special with YOU 😌💘
-  `;
-  popup.classList.remove("hidden");
-  createConfetti();
-  setTimeout(() => {
-    popup.classList.add("hidden");
-    quizPopup.classList.add("hidden");
-    mainCard.classList.remove("hidden");
-  }, 4000);
-});
-
-/* Yes Button */
-yesBtn.addEventListener("click", () => {
-  popupText.innerHTML = "Yayyy 🥰💖 I love you sooo much!
-🌹 Roses are red,<br> Guduu's the cutest, it's true!<br><br> 💖 When you say yes, my heart takes flight,<br> Together forever, our love shines bright!<br><br> Promise to annoy you lovingly,<br> And make you laugh every single day! 😄
-";
-  popup.classList.remove("hidden");
-  createConfetti();
-});
-
-/* No Button Runs Away */
-noBtn.addEventListener("mouseover", () => {
-  noBtn.style.position = "absolute";
-  noBtn.style.top = Math.random()*80 + "%";
-  noBtn.style.left = Math.random()*80 + "%";
-});
-
-/* Popup helper */
-function showPopup(message){
-  popupText.innerHTML = message;
-  popup.classList.remove("hidden");
-  setTimeout(() => popup.classList.add("hidden"), 2000);
+  userName = name;
+  document.getElementById("nameScreen").classList.add("hidden");
+  document.getElementById("quizScreen").classList.remove("hidden");
 }
 
-/* Simple Confetti */
-function createConfetti(){
-  const canvas = document.getElementById("confetti");
-  const ctx = canvas.getContext("2d");
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
+function wrongAnswer() {
+  alert("What guduu 😭 Wrong answer!");
+}
 
-  let pieces = [];
-  for(let i=0;i<150;i++){
-    pieces.push({
-      x: Math.random()*canvas.width,
-      y: Math.random()*canvas.height,
-      size: Math.random()*8+2,
-      speed: Math.random()*3+2
-    });
-  }
+function showFinal() {
+  document.getElementById("quizScreen").classList.add("hidden");
+  document.getElementById("finalScreen").classList.remove("hidden");
+  document.getElementById("finalText").innerHTML =
+    "Will you be my Valentine, " + userName + "? 💖";
+}
 
-  function draw(){
-    ctx.clearRect(0,0,canvas.width,canvas.height);
-    pieces.forEach(p=>{
-      ctx.fillStyle = "hsl("+Math.random()*360+",100%,50%)";
-      ctx.fillRect(p.x,p.y,p.size,p.size);
-      p.y += p.speed;
-      if(p.y>canvas.height) p.y=0;
-    });
-    requestAnimationFrame(draw);
-  }
-  draw();
+function sayYes() {
+  alert("Yayyy 🥰 I love you sooo much!");
+}
+
+function moveNo() {
+  const btn = document.getElementById("noBtn");
+  btn.style.position = "absolute";
+  btn.style.top = Math.random()*80 + "%";
+  btn.style.left = Math.random()*80 + "%";
 }
 </script>
 
