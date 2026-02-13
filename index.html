@@ -6,207 +6,215 @@
 <title>Be My Valentine ❤️</title>
 
 <style>
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: 'Segoe UI', sans-serif;
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:'Segoe UI',sans-serif;
 }
 
-body {
-  height: 100vh;
-  overflow: hidden;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: linear-gradient(135deg, #ff4d6d, #ff8fab, #ffc2d1);
-  color: white;
-  position: relative;
+body{
+  height:100vh;
+  overflow:hidden;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  background:linear-gradient(135deg,#ff4d6d,#ff8fab,#ffc2d1);
+  color:white;
+  position:relative;
 }
 
-.heart {
-  position: absolute;
-  bottom: -20px;
-  font-size: 20px;
-  animation: floatUp linear infinite;
-  opacity: 0.8;
+/* Floating hearts */
+.heart{
+  position:absolute;
+  bottom:-20px;
+  font-size:20px;
+  animation:floatUp linear infinite;
+  opacity:0.8;
 }
 
-@keyframes floatUp {
-  from {
-    transform: translateY(0);
-    opacity: 1;
-  }
-  to {
-    transform: translateY(-110vh);
-    opacity: 0;
-  }
+@keyframes floatUp{
+  from{transform:translateY(0);opacity:1;}
+  to{transform:translateY(-110vh);opacity:0;}
 }
 
-.card {
-  width: 92%;
-  max-width: 360px;
-  padding: 30px 20px;
-  text-align: center;
-  border-radius: 25px;
-  background: rgba(255, 255, 255, 0.15);
-  backdrop-filter: blur(15px);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-  animation: fadeIn 1s ease;
+/* Card */
+.card{
+  width:92%;
+  max-width:360px;
+  padding:30px 20px;
+  text-align:center;
+  border-radius:25px;
+  background:rgba(255,255,255,0.15);
+  backdrop-filter:blur(15px);
+  box-shadow:0 10px 30px rgba(0,0,0,0.3);
+  animation:fadeIn 1s ease;
 }
 
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: scale(0.8);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
+@keyframes fadeIn{
+  from{opacity:0;transform:scale(0.8);}
+  to{opacity:1;transform:scale(1);}
 }
 
-h1 {
-  font-size: 20px;
-  margin-bottom: 25px;
-  line-height: 1.4;
+h1{
+  font-size:20px;
+  margin-bottom:25px;
+  line-height:1.4;
 }
 
-button {
-  padding: 12px 25px;
-  border: none;
-  border-radius: 30px;
-  font-size: 16px;
-  margin: 10px;
-  cursor: pointer;
-  transition: 0.3s;
+button{
+  padding:12px 25px;
+  border:none;
+  border-radius:30px;
+  font-size:16px;
+  margin:10px;
+  cursor:pointer;
+  transition:0.3s;
 }
 
-#yesBtn {
-  background: #ff1e56;
-  color: white;
-  box-shadow: 0 0 15px rgba(255, 30, 86, 0.6);
+#yesBtn{
+  background:#ff1e56;
+  color:white;
+  box-shadow:0 0 15px rgba(255,30,86,0.6);
 }
 
-#yesBtn:active {
-  transform: scale(1.1);
+#yesBtn:active{transform:scale(1.1);}
+
+#noBtn{
+  background:white;
+  color:#ff1e56;
 }
 
-#noBtn {
-  background: white;
-  color: #ff1e56;
+/* Popup */
+.popup{
+  position:fixed;
+  inset:0;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+  padding:30px;
+  font-size:22px;
+  background:linear-gradient(135deg,#ff4d6d,#ff8fab);
+  animation:fadePopup 0.6s ease forwards;
+  z-index:100;
+  flex-direction:column;
 }
 
-.popup {
-  position: fixed;
-  inset: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  padding: 30px;
-  font-size: 22px;
-  background: linear-gradient(135deg, #ff4d6d, #ff8fab);
-  animation: fadePopup 0.6s ease forwards;
-  z-index: 100;
-  flex-direction: column;
+@keyframes fadePopup{
+  from{opacity:0;}
+  to{opacity:1;}
 }
 
-@keyframes fadePopup {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
+.hidden{display:none;}
+
+.popupContent{
+  max-width:350px;
+  animation:popUp 0.6s ease;
 }
 
-.hidden {
-  display: none;
+@keyframes popUp{
+  from{transform:scale(0.6);opacity:0;}
+  to{transform:scale(1);opacity:1;}
 }
 
-.popupContent {
-  max-width: 350px;
-  animation: popUp 0.6s ease;
+/* Confetti */
+#confetti-canvas{
+  position:fixed;
+  pointer-events:none;
+  top:0;
+  left:0;
+  width:100vw;
+  height:100vh;
+  z-index:110;
 }
 
-@keyframes popUp {
-  from {
-    transform: scale(0.6);
-    opacity: 0;
-  }
-  to {
-    transform: scale(1);
-    opacity: 1;
-  }
+/* Name Overlay */
+#nameOverlay{
+  position:fixed;
+  inset:0;
+  background:linear-gradient(135deg,#ff4d6dcc,#ff8fabcc);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  z-index:200;
+  flex-direction:column;
+  padding:20px;
+  text-align:center;
+  color:white;
 }
 
-#confetti-canvas {
-  position: fixed;
-  pointer-events: none;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  z-index: 110;
+#nameOverlay input{
+  padding:12px 18px;
+  border-radius:30px;
+  border:none;
+  width:80%;
+  max-width:300px;
+  font-size:18px;
+  margin-bottom:15px;
+  text-align:center;
+  outline:none;
 }
 
-/* Name Input Overlay */
-#nameOverlay {
-  position: fixed;
-  inset: 0;
-  background: linear-gradient(135deg, #ff4d6dcc, #ff8fabcc);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 200;
-  flex-direction: column;
-  padding: 20px;
-  text-align: center;
-  color: white;
+/* Quiz */
+.quizBox{
+  background:rgba(255,255,255,0.2);
+  padding:25px;
+  border-radius:20px;
+  animation:bounceIn 0.6s ease;
 }
 
-#nameOverlay h2 {
-  font-size: 24px;
-  margin-bottom: 20px;
-  font-weight: 700;
+.quizOptions{
+  display:flex;
+  flex-direction:column;
+  gap:10px;
 }
 
-#nameOverlay input {
-  padding: 12px 18px;
-  border-radius: 30px;
-  border: none;
-  width: 80%;
-  max-width: 300px;
-  font-size: 18px;
-  margin-bottom: 15px;
-  text-align: center;
-  outline: none;
+.quizBtn{
+  background:white;
+  color:#ff1e56;
+  border-radius:25px;
+  padding:10px;
+  font-size:16px;
+  transition:0.3s;
 }
 
-#nameOverlay button {
-  padding: 12px 25px;
-  border-radius: 30px;
-  border: none;
-  font-size: 18px;
-  background: #ff1e56;
-  color: white;
-  cursor: pointer;
-  box-shadow: 0 0 15px rgba(255, 30, 86, 0.7);
-  transition: 0.3s;
+.quizBtn:hover{
+  transform:scale(1.05);
+  background:#ff1e56;
+  color:white;
 }
 
-#nameOverlay button:active {
-  transform: scale(1.1);
+@keyframes bounceIn{
+  0%{transform:scale(0.5);opacity:0;}
+  60%{transform:scale(1.1);}
+  100%{transform:scale(1);opacity:1;}
 }
 </style>
 </head>
+
 <body>
 
 <div id="nameOverlay">
   <h2>What's your name, my Guduu? 🥰</h2>
-  <input type="text" id="nameInput" placeholder="Type your name here" autocomplete="off" />
+  <input type="text" id="nameInput" placeholder="Type your name here" />
   <button id="nameSubmit">Let's Go!</button>
+</div>
+
+<!-- Quiz -->
+<div id="motappaQuiz" class="popup hidden">
+  <div class="popupContent quizBox">
+    <h2>1. What is motappa's favorite thing? 🥺</h2>
+    <div class="quizOptions">
+      <button class="quizBtn">a. Food 🍕</button>
+      <button class="quizBtn">b. Scooty ride 🛵</button>
+      <button class="quizBtn">c. Chilling 😎</button>
+      <button class="quizBtn">d. Quality time 💑</button>
+    </div>
+    <button id="revealAnswerBtn" class="hidden">
+      Click here lanja to find out the correct answer 😌💘
+    </button>
+  </div>
 </div>
 
 <div class="card hidden" id="mainCard">
@@ -217,156 +225,166 @@ button {
 
 <div id="popup" class="popup hidden">
   <div class="popupContent" id="popupText"></div>
-  <small style="margin-top:15px; font-size:14px; cursor:pointer; opacity:0.8;">Tap anywhere to close</small>
+  <small style="margin-top:15px;font-size:14px;cursor:pointer;opacity:0.8;">
+    Tap anywhere to close
+  </small>
 </div>
 
 <canvas id="confetti-canvas"></canvas>
 
 <script>
-// Floating hearts
+// Floating Hearts
 function createHeart(){
-  const heart = document.createElement("div");
-  heart.className = "heart";
-  heart.innerHTML = "💖";
-  heart.style.left = Math.random() * 100 + "vw";
-  heart.style.animationDuration = (4 + Math.random() * 3) + "s";
-  heart.style.fontSize = (16 + Math.random() * 25) + "px";
+  const heart=document.createElement("div");
+  heart.className="heart";
+  heart.innerHTML="💖";
+  heart.style.left=Math.random()*100+"vw";
+  heart.style.animationDuration=(4+Math.random()*3)+"s";
+  heart.style.fontSize=(16+Math.random()*25)+"px";
   document.body.appendChild(heart);
-  setTimeout(() => heart.remove(), 7000);
+  setTimeout(()=>heart.remove(),7000);
 }
-setInterval(createHeart, 400);
+setInterval(createHeart,400);
 
-const yesBtn = document.getElementById("yesBtn");
-const noBtn = document.getElementById("noBtn");
-const popup = document.getElementById("popup");
-const popupText = document.getElementById("popupText");
-const nameOverlay = document.getElementById("nameOverlay");
-const nameInput = document.getElementById("nameInput");
-const nameSubmit = document.getElementById("nameSubmit");
-const mainCard = document.getElementById("mainCard");
-const displayName = document.getElementById("displayName");
+const nameOverlay=document.getElementById("nameOverlay");
+const nameInput=document.getElementById("nameInput");
+const nameSubmit=document.getElementById("nameSubmit");
+const motappaQuiz=document.getElementById("motappaQuiz");
+const mainCard=document.getElementById("mainCard");
+const displayName=document.getElementById("displayName");
+const popup=document.getElementById("popup");
+const popupText=document.getElementById("popupText");
+const quizBtns=document.querySelectorAll(".quizBtn");
+const revealAnswerBtn=document.getElementById("revealAnswerBtn");
+const yesBtn=document.getElementById("yesBtn");
+const noBtn=document.getElementById("noBtn");
 
-let noCount = 0;
-let userName = "Guduu";
+let selectedOptions=0;
+let noCount=0;
+let userName="Guduu";
 
-// Handle name submission
-nameSubmit.addEventListener("click", () => {
-  const val = nameInput.value.trim();
-  if(val.length > 0) {
-    userName = val;
-    displayName.textContent = userName;
-    nameOverlay.style.display = "none";
+nameSubmit.addEventListener("click",()=>{
+  const val=nameInput.value.trim();
+  if(val){
+    userName=val;
+    displayName.textContent=userName;
+    nameOverlay.style.display="none";
+    setTimeout(()=>motappaQuiz.classList.remove("hidden"),500);
+  }
+});
+
+quizBtns.forEach(btn=>{
+  btn.addEventListener("click",()=>{
+    if(btn.disabled)return;
+    btn.disabled=true;
+    selectedOptions++;
+    showPopup("What guduu, you don't know ur motappa 😭💔");
+    if(selectedOptions===4){
+      revealAnswerBtn.classList.remove("hidden");
+    }
+  });
+});
+
+revealAnswerBtn.addEventListener("click",()=>{
+  popupText.innerHTML=`
+  💖💖💖<br><br>
+  a. Food with you 🍕❤️<br>
+  b. Scooty ride with you 🛵💘<br>
+  c. Chilling with you 😎💕<br>
+  d. Quality time with you 💑💞<br><br>
+  Because everything is special with YOU 😌💓
+  `;
+  popup.classList.remove("hidden");
+  createConfetti(200);
+  animateConfetti();
+  setTimeout(()=>{
+    motappaQuiz.classList.add("hidden");
     mainCard.classList.remove("hidden");
-  } else {
-    alert("Please enter your name, my Guduu! 🥰");
-  }
+  },4000);
 });
 
-nameInput.addEventListener("keydown", (e) => {
-  if(e.key === "Enter"){
-    nameSubmit.click();
-  }
-});
-
-// Show popup function
 function showPopup(message){
-  popupText.innerHTML = message;
+  popupText.innerHTML=message;
   popup.classList.remove("hidden");
 }
 
-// Confetti Effect
-const confettiCanvas = document.getElementById("confetti-canvas");
-const ctx = confettiCanvas.getContext("2d");
+popup.addEventListener("click",()=>{
+  popup.classList.add("hidden");
+  confettiElements=[];
+  ctx.clearRect(0,0,confettiCanvas.width,confettiCanvas.height);
+});
 
-let confettiElements = [];
+/* Confetti */
+const confettiCanvas=document.getElementById("confetti-canvas");
+const ctx=confettiCanvas.getContext("2d");
+let confettiElements=[];
+confettiCanvas.width=window.innerWidth;
+confettiCanvas.height=window.innerHeight;
 
-function resizeCanvas() {
-  confettiCanvas.width = window.innerWidth;
-  confettiCanvas.height = window.innerHeight;
-}
-resizeCanvas();
-window.addEventListener("resize", resizeCanvas);
-
-class ConfettiParticle {
-  constructor() {
-    this.x = Math.random() * confettiCanvas.width;
-    this.y = Math.random() * confettiCanvas.height - confettiCanvas.height;
-    this.size = 7 + Math.random() * 5;
-    this.speedY = 2 + Math.random() * 3;
-    this.speedX = Math.random() * 2 - 1;
-    this.angle = Math.random() * 360;
-    this.angularSpeed = (Math.random() - 0.5) * 0.1;
-    this.color = `hsl(${Math.random()*360}, 90%, 60%)`;
+class ConfettiParticle{
+  constructor(){
+    this.x=Math.random()*confettiCanvas.width;
+    this.y=Math.random()*confettiCanvas.height-confettiCanvas.height;
+    this.size=7+Math.random()*5;
+    this.speedY=2+Math.random()*3;
+    this.speedX=Math.random()*2-1;
+    this.angle=Math.random()*360;
+    this.angularSpeed=(Math.random()-0.5)*0.1;
+    this.color=`hsl(${Math.random()*360},90%,60%)`;
   }
-  update() {
-    this.y += this.speedY;
-    this.x += this.speedX;
-    this.angle += this.angularSpeed;
-    if(this.y > confettiCanvas.height) {
-      this.y = -this.size;
-      this.x = Math.random() * confettiCanvas.width;
+  update(){
+    this.y+=this.speedY;
+    this.x+=this.speedX;
+    this.angle+=this.angularSpeed;
+    if(this.y>confettiCanvas.height){
+      this.y=-this.size;
+      this.x=Math.random()*confettiCanvas.width;
     }
   }
-  draw() {
+  draw(){
     ctx.save();
-    ctx.translate(this.x, this.y);
+    ctx.translate(this.x,this.y);
     ctx.rotate(this.angle);
-    ctx.fillStyle = this.color;
-    ctx.fillRect(-this.size/2, -this.size/2, this.size, this.size/2);
+    ctx.fillStyle=this.color;
+    ctx.fillRect(-this.size/2,-this.size/2,this.size,this.size/2);
     ctx.restore();
   }
 }
 
-function createConfetti(count) {
-  confettiElements = [];
-  for(let i=0; i<count; i++){
+function createConfetti(count){
+  confettiElements=[];
+  for(let i=0;i<count;i++){
     confettiElements.push(new ConfettiParticle());
   }
 }
 
 function animateConfetti(){
-  ctx.clearRect(0, 0, confettiCanvas.width, confettiCanvas.height);
-  confettiElements.forEach(p => {
+  ctx.clearRect(0,0,confettiCanvas.width,confettiCanvas.height);
+  confettiElements.forEach(p=>{
     p.update();
     p.draw();
   });
   requestAnimationFrame(animateConfetti);
 }
 
-// YES button click
-yesBtn.addEventListener("click", () => {
-  const poem = `
-    🌹 Roses are red,<br>
-    Guduu's the cutest, it's true!<br><br>
-    💖 When you say yes, my heart takes flight,<br>
-    Together forever, our love shines bright!<br><br>
-    Promise to annoy you lovingly,<br>
-    And make you laugh every single day! 😄
-  `;
-  showPopup(poem);
+yesBtn.addEventListener("click",()=>{
+  showPopup("YAYYY 💖 I knew it!!! You're stuck with me forever 😌💘
+🌹 Roses are red,<br> Guduu's the cutest, it's true!<br><br> 💖 When you say yes, my heart takes flight,<br> Together forever, our love shines bright!<br><br> Promise to annoy you lovingly,<br> And make you laugh every single day! 😄
+");
   createConfetti(150);
   animateConfetti();
 });
 
-// NO button click
-noBtn.addEventListener("click", () => {
+noBtn.addEventListener("click",()=>{
   noCount++;
-  if(noCount === 1){
-    showPopup("Ohhh really? 🥺 Think again... I’m cute though 😏");
-  } else if(noCount === 2){
-    showPopup("Wrong choice detected 🚨😂 System says try pressing YES 💖");
-  } else {
+  if(noCount===1){
+    showPopup("Ohhh really? 🥺 Think again...");
+  }else if(noCount===2){
+    showPopup("Wrong choice detected 🚨😂");
+  }else{
     showPopup("Okay fine... But my heart will wait for you anyway 💔❤️");
-    noBtn.disabled = true;
+    noBtn.disabled=true;
   }
-});
-
-// Close popup on tap
-popup.addEventListener("click", () => {
-  popup.classList.add("hidden");
-  // Stop confetti animation by clearing array
-  confettiElements = [];
-  ctx.clearRect(0, 0, confettiCanvas.width, confettiCanvas.height);
 });
 </script>
 
